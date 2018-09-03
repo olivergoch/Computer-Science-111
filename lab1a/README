@@ -1,0 +1,14 @@
+NAME:Oliver Goch
+EMAIL:the.oliver.goch@gmail.com
+ID:123456789
+
+README: This file! Contains very brief descriptions of files and reasearch
+
+Makefile: Supports default, clean , and dist options for executing removing files and makeing a tarball respectively
+
+lab1a.c: This is the source file. It contains the code for the project. The code does a non canonical read going a character at a time and writing to stdout. It supports a --shell option that will allow the user to run shell commands.
+
+
+TA ZHAOXING BU provided basis for forking function
+
+I got the code for the termianl change from the GNU Library https://www.gnu.org/software/libc/manual/html_mono/libc.html#Noncanonical-Input

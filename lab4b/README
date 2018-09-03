@@ -1,0 +1,18 @@
+NAME:Oliver Goch
+EMAIL:the.oliver.goch@gmail.com
+ID:123456789
+
+
+lab4b.c: This is the source code file, it outputs temperature and time and also takes commands from STDIN while running.
+
+Makefile: Builds the program and contains other options. Has a check option to check the program. It also has a clean option to delete the created files, and a dist option for making a distribution tarball.
+
+smoketest.sh: Contains a few tests to ensure the basic functionality of the program
+
+README: This file! Contains a very brief description of the included files
+
+I used the provided temperature conversion code on http://wiki.seeedstudio.com/Grove-Temperature_Sensor_V1.2/
+
+I discovered to use the log function with variables one must compile the program with the -lm option.
+
+I also found it hard to write to the log file, but eventually I found I could use fopen and fprintf. After which I found out I had to use fflush to make sure the file actually gets written to.

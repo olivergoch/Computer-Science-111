@@ -1,0 +1,17 @@
+NAME:Oliver Goch
+EMAIL:the.oliver.goch@gmail.com
+ID:123456789
+
+lab0.c: This is the source file containing all the code necessary for this project. The general idea is that the code goes bit by bit and copies directly from input to output. It handles all arguments with getopt_long.
+
+Makefile: This file is the Makefile that has the necessary commands to make the project. For the make check I just used a script called smoketest.sh. I found during my research the Makefiles are very particular and if you use spaces instead of a tab, an error will be generated.
+
+backtrace.png: It is a screenshot of backtrace called on the segfault. This was fairly straightforward to generate and I used the file command to extract extra information, such as line numbers to aid if this was a segfault not intentionally caused.
+
+breakpoint.png: This is a screenshot of the function running in gdb showing that the pointer is in fact null and will cause a segfault. This was a bit harder to get to, but I eventually figured it out. Both files I generated an a.out file instead of a regularly labelled executable file and used that with the segfaults. It was definitely easier knowing where the segfault would be when creating the breakpoint.
+
+smoketest.sh: This is a script that I used for smoke tests. It basically executes lab0 repeatedly and checks the exit code. The smoke tests checked the command line arguemnts and see if they generated the correct exit code. This included a combination of all the arguemtns, if the arguments were used incorrectly, if the incorrect arguments were used, or invalid files were given.
+
+README: What you’re reading right now! Contains a very brief description of every file included for submission, along with notes of the project.
+
+I noticed a couple of things during my research. First, creat(2) is basically obselete as open(2) can run with the flag O_CREAT and this will create the file if necessary. Next, dup(2) was not exactly necessary for this project. Next, README files are very syntax specific, only accepting tabs.

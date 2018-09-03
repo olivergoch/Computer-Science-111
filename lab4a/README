@@ -1,0 +1,16 @@
+NAME: Oliver Goch
+EMAIL: the.oliver.goch@gmail.com
+ID: 123456789
+
+S/N: BBGW17052006
+MAC Address: 2c:f7:f1:06:67:64
+
+my_beaglebone.jpg: This is a selfie taken of me and my assembled Beaglebone attached to my laptop.
+
+connected.png: This a screenshot of a USB terminal commmand session that was connected to my system. It showed that I gave it the name of my student ID and I configured network access to my home wifi.
+
+copy.png: This is a screenshot showing that I successfully used stfp by using the application FileZilla to copy a file from my local laptop to the Beaglebone. In this case it was hello.c, which was a trivial C program that output the phrase Hello World
+
+build_run.png: This is a screenshot of my Beaglebone that showed I had successfully built, using gcc -o, and run the trivial C program.
+
+git.png: This is a screenshot from the Beaglebone of me using the git commands to create and clone a directory.

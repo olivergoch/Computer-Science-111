@@ -1,0 +1,18 @@
+------------------------------
+| INCLUDED FILES
+------------------------------
+1. lab3b.py	- The source module for the Makefile-buildable file system examiner.
+2. Makefile - A Makefile which gives the following options: "make"/"make default," "make clean," and "make dist."
+              They do as you would expect, based on their name.
+3. README - This file. It details the included files and their general purpose, as well as any noteworthy sources I consulted while producing
+            this project.
+
+------------------------------
+| CITATIONS
+------------------------------
+Below is a listing of the resources I consulted when coding this,
+not including man pages. Note, however, that all manpages were obtained
+from pubs.opengroup.org.
+
+1. https://stackoverflow.com/questions/29405989/create-dictionary-with-multiple-values-per-key
+2. http://cs.smith.edu/~nhowe/262/oldlabs/ext2.html

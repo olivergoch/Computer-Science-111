@@ -1,0 +1,16 @@
+NAME: Oliver Goch
+EMAIL: the.oliver.goch@gmail.com
+ID: 123456789
+
+README: The file you currently have the pleasure of viewing! Contains brief description of all required files.
+
+Makefile: Has default option which makes lab1b-client and lab1b-server. Dist makes a tarball for distribution. Clean removes the tarball and the executable files.
+
+lab1b-server.c: Creates a server that has a necessary —-port option and an optional —-compress option. Takes data from the client socket and pipes it to the shell, which is a fork of parent process. It parses the shell and pipes it back to parent process and then writes that to the client socket. If the -—compress option is passed on both the client and the server, the server must first decompress before processing the information. Similarly, when it writes it back to the client socket it must recompress it. 
+
+lab1b-client.c: Creates a client that interacts with the server. Same as the client, it has a necessary --port option that must be passed for it to connect to the proper server. It has a log option that records the bytes sent and received along with the actual messages sent. If the optional --compress option is passed on both client and server, the client compresses data and sends it over the socket. And when it receieves from the server it must decompress it. 
+
+I got the setup for the server and client code from http://www.cs.rpi.edu/~moorthy/Courses/os98/Pgms/socket.html
+It was instrumental in me being able to set up this code
+
+In my research I found not to blindly copy example code, as it may cause warnings but still work. In this case the example used int to declare a variable that should have been socklen_t. Another thing I learned is that the zlib processes files as unsigned chars.

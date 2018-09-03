@@ -1,0 +1,123 @@
+Total: 6825 samples
+    6443  94.4%  94.4%     6443  94.4% __do_global_dtors_aux
+     231   3.4%  97.8%      231   3.4% SortedList_delete
+     123   1.8%  99.6%      123   1.8% SortedList_insert
+      26   0.4% 100.0%       26   0.4% register_tm_clones
+       1   0.0% 100.0%        1   0.0% SortedList_length
+       1   0.0% 100.0%        1   0.0% _int_free
+       0   0.0% 100.0%     6824 100.0% __clone
+       0   0.0% 100.0%        1   0.0% __libc_start_main
+       0   0.0% 100.0%        1   0.0% _init
+       0   0.0% 100.0%     6824 100.0% listThread
+       0   0.0% 100.0%        1   0.0% main
+       0   0.0% 100.0%     6824 100.0% start_thread
+ROUTINE ====================== listThread in /u/cs/ugrad/oliver/lab2_list.c
+     0   6824 Total samples (flat / cumulative)
+     .      .   31:   fprintf(stderr, "\n");
+     .      .   32:   exit(2);
+     .      .   33: }
+     .      .   34: 
+     .      .   35: void* listThread(void* beginning)
+---
+     .      .   36: {
+     .      .   37: 	SortedListElement_t* beg = beginning;
+     .      .   38: 	int i;
+     .      .   39: 	//insert all the elements
+     .      .   40: 
+     .   2954   41: 	for(i = 0; i < iNum; i++)
+     .      .   42: 	{
+     .      .   43: 		if(mutexFlag)
+     .      .   44: 		{
+     .      .   45: 			pthread_mutex_lock(&listMutex);
+     .   3515   46: 			SortedList_insert(head, beg + i);
+     .    123   47: 			pthread_mutex_unlock(&listMutex);
+     .      .   48: 		}
+     .      .   49: 		else if(spinFlag)
+     .      .   50: 		{
+     .      .   51: 			while(__sync_lock_test_and_set(&spinLock, 1) == 1)
+     .      .   52: 			{}
+     .      1   53: 			SortedList_insert(head, beg + i);
+     .      .   54: 			__sync_lock_release(&spinLock);
+     .      .   55: 		}
+     .      .   56: 		else
+     .      .   57: 			SortedList_insert(head, beg + i);
+     .      .   58: 	}
+     .      .   59: 	//get length of list
+     .      .   60: 	int length;
+     .      .   61: 	if(mutexFlag)
+     .      .   62: 	{
+     .      .   63: 		pthread_mutex_lock(&listMutex);
+     .      .   64: 		length = SortedList_length(head);
+     .      .   65: 		pthread_mutex_unlock(&listMutex);
+     .      .   66: 	}
+     .    231   67: 	else if(spinFlag)
+     .      .   68: 	{
+     .      .   69: 		while(__sync_lock_test_and_set(&spinLock, 1) == 1)
+     .      .   70: 		{}
+     .      .   71: 		length = SortedList_length(head);
+     .      .   72: 		__sync_lock_release(&spinLock);
+     .      .   73: 	}
+     .      .   74: 	else
+     .      .   75: 		length = SortedList_length(head);
+     .      .   76: 	if(length == -1)
+     .      .   77: 	{
+     .      .   78: 		fprintf(stderr, "Error on length: list is corrupted\n");
+     .      .   79: 		exit(2);
+     .      .   80: 	}
+     .      .   81: 	//lookup and delete every element
+     .      .   82: 	for(i = 0; i < iNum; i++)
+     .      .   83: 	{
+     .      .   84: 		SortedListElement_t* foundElement;
+     .      .   85: 		int deleted;
+     .      .   86: 		if(mutexFlag)
+     .      .   87: 		{
+     .      .   88: 			pthread_mutex_lock(&listMutex);
+     .      .   89: 			foundElement = SortedList_lookup(head, beg[i].key);
+     .      .   90: 			//if the element could not be found
+     .      .   91: 			if(foundElement == NULL)
+     .      .   92: 			{
+     .      .   93: 				fprintf(stderr, "Error on lookup: list is corrupted\n");
+     .      .   94: 				exit(2);
+     .      .   95: 			}
+     .      .   96: 			deleted = SortedList_delete(foundElement);
+     .      .   97: 			pthread_mutex_unlock(&listMutex);
+     .      .   98: 		}
+     .      .   99: 		else if(spinFlag)
+     .      .  100: 		{
+     .      .  101: 			while(__sync_lock_test_and_set(&spinLock, 1) == 1)
+     .      .  102: 			{}
+     .      .  103: 			foundElement = SortedList_lookup(head, beg[i].key);
+     .      .  104: 			//if the element could not be found
+     .      .  105: 			if(foundElement == NULL)
+     .      .  106: 			{
+     .      .  107: 				fprintf(stderr, "Error on lookup: list is corrupted\n");
+     .      .  108: 				exit(2);
+     .      .  109: 			}
+     .      .  110: 			deleted = SortedList_delete(foundElement);
+     .      .  111: 			__sync_lock_release(&spinLock);
+     .      .  112: 		}
+     .      .  113: 		else
+     .      .  114: 		{
+     .      .  115: 			foundElement = SortedList_lookup(head, beg[i].key);
+     .      .  116: 			//if could not find the element
+     .      .  117: 			if(foundElement == NULL)
+     .      .  118: 			{
+     .      .  119: 				fprintf(stderr, "Error on lookup: list is corrupted\n");
+     .      .  120: 				exit(2);
+     .      .  121: 			}
+     .      .  122: 			deleted = SortedList_delete(foundElement);
+     .      .  123: 		}
+     .      .  124: 		if(deleted == 1)
+     .      .  125: 		{
+     .      .  126: 			fprintf(stderr, "Error on delete: list is corrupted\n");
+     .      .  127: 			exit(2);
+     .      .  128: 		}
+     .      .  129: 	}
+     .      .  130: 	return NULL;
+     .      .  131: }
+---
+     .      .  132: 
+     .      .  133: int main(int argc, char **argv)
+     .      .  134: {
+     .      .  135: 
+     .      .  136: 	static struct option longopts[] = {

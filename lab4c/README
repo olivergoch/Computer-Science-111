@@ -1,0 +1,18 @@
+NAME:Oliver Goch
+EMAIL:the.oliver.goch@gmail.com
+ID:123456789
+
+lab4c_tcp.c: Source code for the TCP version of lab4c, uses regular socket connection.
+
+lab4c_tls.c: Source code for the TLS/SSL version of lab4c, uses SSL connection methods.
+
+Makefile: Builds the program and contains other options. Has a check option to check the program. It also has a clean option to delete the created files, and a dist option for making a distribution tarball.
+
+
+README: This file! Contains a very brief description of the included files
+
+I used the provided temperature conversion code on http://wiki.seeedstudio.com/Grove-Temperature_Sensor_V1.2/
+
+I discovered to use the log function with variables one must compile the program with the -lm option.
+
+I used the SSL/TSL code from http://fm4dd.com/openssl/sslconnect.htm to implement lab4c_tls.c
